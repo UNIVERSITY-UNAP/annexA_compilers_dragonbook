@@ -5,11 +5,11 @@ import lexer.*;
 import inter.*;
 
 public class Env {
-    private final Hashtable table;
+    private final Map<Token, Id> table;
     protected Env prev;
 
     public Env(Env n) {
-        table = new Hashtable();
+        table = new HashMap<>();
         prev = n;
     }
 

@@ -7,7 +7,7 @@ import symbols.*;
 public class Lexer {
     public static int line = 1;
     char peek = ' ';
-    Hashtable words = new Hashtable();
+    Map<String, Word> words = new HashMap<>();
 
     void reserve(Word w) {
         words.put(w.lexeme, w);
