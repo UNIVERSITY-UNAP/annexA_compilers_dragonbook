@@ -41,6 +41,14 @@ public class Lexer {
 
     public Token scan() throws IOException {
         for (;; readch()) {
+            if (peek == '/') {
+                if(readch('/')){
+                    while (!readch('\n'));
+                    line = line + 1;
+                    continue;
+                }
+                else peek = '/';
+            }
             if (peek == ' ' || peek == '\t')
                 continue;
             else if (peek == '\n')
