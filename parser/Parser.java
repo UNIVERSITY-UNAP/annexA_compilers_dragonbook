@@ -91,7 +91,7 @@ public class Parser {
 
     Stmt stmt() throws IOException {
         Expr x;
-        Stmt s1, s2;
+        Stmt s1, s2, s3;
         Stmt savedStmt;
         switch (look.tag) {
             case ';':
@@ -134,6 +134,21 @@ public class Parser {
                 donode.init(s1, x);
                 Stmt.Enclosing = savedStmt;
                 return donode;
+            case Tag.FOR:
+                For fornode = new For();
+                savedStmt = Stmt.Enclosing;
+                Stmt.Enclosing = fornode;
+                match(Tag.FOR);
+                match('(');
+                s1 = assign();
+                x = bool();
+                match(';');
+                s2 = stmt();
+                match(')');
+                s3 = stmt();
+                fornode.init(x, s2, s3);
+                Stmt.Enclosing = savedStmt;
+                return new Seq(s1, fornode);
             case Tag.BREAK:
                 match(Tag.BREAK);
                 match(';');
